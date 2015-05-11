@@ -20,6 +20,9 @@ module Setster
       get(location_url)
     end
 
+    # Retrieve a list of service options.
+    #
+    # @return [Array(Hash)]
     def service_options
       service_url = "http://www.setster.com/api/v2/service?session_token=#{session_token}"
       get(service_url)
