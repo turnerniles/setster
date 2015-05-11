@@ -16,16 +16,18 @@ module Setster
 
     # Retrieve the location list.
     #
+    # @param query [Hash]
     # @return [Array(Hash)]
-    def location_list
-      get('/location')
+    def locations(query = {})
+      get('/location', query)
     end
 
     # Retrieve a list of service options.
     #
+    # @param query [Hash]
     # @return [Array(Hash)]
-    def service_options
-      get('/service')
+    def services(query = {})
+      get('/service', query)
     end
 
     private
