@@ -18,14 +18,14 @@ module Setster
     #
     # @return [Array(Hash)]
     def location_list
-      get('/location', location_url)
+      get('/location')
     end
 
     # Retrieve a list of service options.
     #
     # @return [Array(Hash)]
     def service_options
-      get('/service', service_url)
+      get('/service')
     end
 
     private
