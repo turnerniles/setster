@@ -10,8 +10,11 @@ module Setster
     # @param api_key [String]
     # @return [Setster]
     def initialize(email, api_key)
-      data = post('/account/authenticate', email: email, token: api_key)
+      url = "account/authenticate?email=#{email}&token=#{api_key}"
+      data = post(url)
+
       @session_token = data['session_token']
+
     end
 
     # Retrieve the location list.
@@ -19,7 +22,7 @@ module Setster
     # @param query [Hash]
     # @return [Array(Hash)]
     def locations(query = {})
-      get('/location', query)
+      get('location', query)
     end
 
     # Retrieve a list of service options.
@@ -27,7 +30,7 @@ module Setster
     # @param query [Hash]
     # @return [Array(Hash)]
     def services(query = {})
-      get('/service', query)
+      get('service', query)
     end
 
     private
