@@ -16,7 +16,14 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+First create your Setster::API instance:
+
+    setster = Setster::API.new(email, api_key)
+    
+Now you can query for location lists or service options:
+
+    setster.location_list
+    setster.service_options
 
 ## Development
 
