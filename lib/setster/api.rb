@@ -1,7 +1,7 @@
 module Setster
   class API
 
-    URL = 'http://www.setster.com/api/v2'
+    URL = 'http://www.setster.com/api/v2/'
 
     attr_reader :session_token
 
@@ -10,7 +10,7 @@ module Setster
     # @param api_key [String]
     # @return [Setster]
     def initialize(email, api_key)
-      data = post("#{URL}/account/authenticate", email: email, token: api_key)
+      data = post('/account/authenticate', email: email, token: api_key)
       @session_token = data['session_token']
     end
 
@@ -18,23 +18,21 @@ module Setster
     #
     # @return [Array(Hash)]
     def location_list
-      location_url = "#{URL}/location"
-      get(location_url)
+      get('/location', location_url)
     end
 
     # Retrieve a list of service options.
     #
     # @return [Array(Hash)]
     def service_options
-      service_url = "#{URL}/service"
-      get(service_url)
+      get('/service', service_url)
     end
 
     private
 
-    def get(url, query = {})
+    def get(path, query = {})
       query = { session_token: session_token }.merge(query) if session_token
-      response = HTTParty.get(url, query: query, format: :json)
+      response = HTTParty.get("#{URL}#{path}", query: query, format: :json)
 
       if response.success?
         return response['data']
@@ -43,9 +41,9 @@ module Setster
       end
     end
 
-    def post(url, query = {})
+    def post(path, query = {})
       query = { session_token: session_token }.merge(query) if session_token
-      response = HTTParty.post(url, query: query, format: :json)
+      response = HTTParty.post("#{URL}#{path}", query: query, format: :json)
 
       if response.success?
         return response.parsed_response['data']
