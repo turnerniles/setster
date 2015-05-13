@@ -33,6 +33,26 @@ module Setster
       get('service', query)
     end
 
+    def employee(query = {})
+      get('employee', query)
+    end
+
+    def getavailabilitytime(employee_id, query = {})
+      get("employee/getavailabilitytime/#{employee_id}", query)
+    end
+
+    def create_appointment(params)
+      response = HTTParty.post("#{URL}appointment?session_token=#{@session_token}", data: {data: params}, format: :json)
+
+      if response.success?
+        return response.parsed_response['data']
+      else
+        raise response.response
+      end
+
+    end
+
+
     private
 
     def get(path, query = {})
