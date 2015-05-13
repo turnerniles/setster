@@ -42,14 +42,7 @@ module Setster
     end
 
     def create_appointment(params)
-      response = HTTParty.post("#{URL}appointment?session_token=#{@session_token}", data: {data: params}, format: :json)
-
-      if response.success?
-        return response.parsed_response['data']
-      else
-        raise response.response
-      end
-
+      post('appointment', data: params)
     end
 
 
@@ -57,23 +50,25 @@ module Setster
 
     def get(path, query = {})
       query = { session_token: session_token }.merge(query) if session_token
+      query.stringify_keys!
       response = HTTParty.get("#{URL}#{path}", query: query, format: :json)
 
       if response.success?
         return response['data']
       else
-        raise response.response
+        raise "Setster: #{response['statusDescription']}"
       end
     end
 
     def post(path, query = {})
       query = { session_token: session_token }.merge(query) if session_token
-      response = HTTParty.post("#{URL}#{path}", query: query, format: :json)
+      query.stringify_keys!
+      response = HTTParty.post("#{URL}#{path}", data: query, format: :json)
 
       if response.success?
         return response.parsed_response['data']
       else
-        raise response.response
+        raise "Setster: #{response['statusDescription']}"
       end
     end
 
